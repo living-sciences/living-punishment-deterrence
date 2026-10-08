@@ -1,0 +1,138 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "A model of which sanction margins deter, fitted WITHOUT Hansen, predicts deterrence at both his thresholds and classifies all three margins (0.08, 0.15 \u2265, 0.15 >) as CONSISTENT with the 001 re-analysis \u2014 the newer prosecution/jail 'criminogenic' studies act on a general-crime record channel, not Hansen's DUI experienced-severity margins.",
+  "status": "completed",
+  "metrics": [
+    {
+      "label": "OOS test \u2014 Hansen 0.08 (predict deter)",
+      "value": "consistent; 001 A1 = -16.6% rel [-29.4,-2.2]",
+      "baseline": "model predicts DETER (\u2212)",
+      "baseline_label": "leave-Hansen-out sign model (hansen_oos_test.csv)",
+      "note": "Severity + DUI-record classes both deter; 001 point negative, A1 CI excl 0."
+    },
+    {
+      "label": "OOS test \u2014 Hansen 0.15 (predict deter)",
+      "value": "consistent both codings; A1 rel -6.0% (\u2265) / -9.1% (>)",
+      "baseline": "model predicts DETER (\u2212)",
+      "baseline_label": "leave-Hansen-out sign model (hansen_oos_test.csv)",
+      "note": "Cleanest experienced-severity DUI margin; strict A1 CI excl 0, statutory bw-dependent. Branch N: do-files not obtained."
+    },
+    {
+      "label": "Record-change margin splits by domain",
+      "value": "DUI deters (-6.6%,-24.5%); general crime criminogenic (+113%,+100%)",
+      "baseline": "Hansen: DUI conviction bundle deters",
+      "baseline_label": "evidence CSV (Sloan 2016; Agan 2023; Mueller-Smith\u2013Schnepel 2021)",
+      "note": "This domain split is why the new 'criminogenic' studies do NOT contradict Hansen."
+    },
+    {
+      "label": "Re-analysed 0.08 deterrence elasticity",
+      "value": "-0.214 (~97% survives)",
+      "baseline": "-0.22",
+      "baseline_label": "Hansen Table 7 / paper_claims.json C14",
+      "note": "0.15 strict -0.121 (~100%); 0.15 statutory -0.080 (~66%, CI incl 0)."
+    },
+    {
+      "label": "Jail-day effect \u2014 UPPER BOUND (jail-only channel)",
+      "value": "-4.3%/jail-day at 0.08",
+      "baseline": "Jansson et al. -2.67%/prison-day",
+      "baseline_label": "Jansson et al. 2025 (\u221280%/prison-month \u00f730)",
+      "note": "Upper bound: Hansen's margin bundles conviction+fines+treatment, so dividing the whole effect by jail days overstates it."
+    }
+  ],
+  "tables": [
+    {
+      "title": "Out-of-sample prediction of Hansen's margins (model fitted without Hansen)",
+      "columns": [
+        "Hansen margin",
+        "Model predicts",
+        "001 A1 (rel)",
+        "001 A1 CI",
+        "001 A2 CI",
+        "Class"
+      ],
+      "rows": [
+        [
+          "0.08",
+          "deter (\u2212)",
+          "-16.6%",
+          "[-29.4,-2.2]",
+          "[-29.7,+0.9]",
+          "consistent"
+        ],
+        [
+          "0.15 statutory \u2265",
+          "deter (\u2212)",
+          "-6.0%",
+          "[-14.9,+3.4]",
+          "[-15.6,+5.5]",
+          "consistent"
+        ],
+        [
+          "0.15 strict >",
+          "deter (\u2212)",
+          "-9.1%",
+          "[-18.4,-0.5]",
+          "[-20.2,+0.7]",
+          "consistent"
+        ]
+      ],
+      "highlight_row": 2
+    },
+    {
+      "title": "Sign model \u2014 which margin classes deter (post-2015, Hansen excluded)",
+      "columns": [
+        "Margin class",
+        "n",
+        "deter/null/crim",
+        "Majority"
+      ],
+      "rows": [
+        [
+          "severity / certainty, no record",
+          "12",
+          "7/3/2",
+          "DETER"
+        ],
+        [
+          "record change \u2014 DUI",
+          "2",
+          "2/0/0",
+          "deter"
+        ],
+        [
+          "record change \u2014 general crime",
+          "2",
+          "0/0/2",
+          "criminogenic"
+        ],
+        [
+          "monetary only",
+          "1",
+          "0/1/0",
+          "null"
+        ]
+      ],
+      "highlight_row": 0
+    }
+  ],
+  "figures": [
+    {
+      "file": "results/fig_margins_forest.png",
+      "caption": "Relative effect of the harsher sanction on reoffending, by study, coloured by margin class, with Hansen's 001 estimates (A1 RBC + A2 honest CIs) highlighted in orange. Severity/certainty (blue) and DUI record (green) deter; general-crime record (vermillion) is criminogenic; Hansen's margins are negative \u2014 all three classified consistent.",
+      "alt": "Forest plot: severity and DUI-record studies left of zero (deter), general-crime record studies far right (criminogenic), Hansen 001 estimates negative with confidence bars"
+    },
+    {
+      "file": "results/fig_utah_005.png",
+      "caption": "Utah .05\u2013.07 share of reported-BAC DUI arrests, FY2016\u20132025. The share doubles after the .05 law (mean 4.7%\u219210.1%), but the rise is partly mechanical (newly-arrestable drivers), not deterrence.",
+      "alt": "Bar chart of Utah .05-.07 arrest share by fiscal year, low pre-law, rising after the 2018 law line"
+    }
+  ],
+  "notes": [
+    "'001' input is the completed continuation study followup/002-methods-and-transport (the 001- dir was cut short/empty); status completed.",
+    "Branch N: 0.15 carried under both codings (openICPSR do-files not obtained).",
+    "Structured synthesis, not a meta-analysis; regression descriptive only (n=7<8, H8), sign model carries inference.",
+    "Classification tests SIGN (no admissible regression prediction interval). Hansen's relative effects sit on the small end of the severity cluster (high-base 4-yr DUI-test outcome).",
+    "Agan & Mueller-Smith\u2013Schnepel values are sign-convention conversions of published non-prosecution/diversion effects."
+  ],
+  "report_file": "report.md"
+}

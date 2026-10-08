@@ -1,0 +1,13 @@
+"state","test","threshold","year","statistic","p","log_density_jump","ldj_ci_lo","ldj_ci_hi","MDD"
+"WA","rddensity_jk",0.08,"pooled",1.46143987850426,0.143894763487233,NA,NA,NA,NA
+"WA","rddensity_jk",0.15,"pooled",-1.41226434704206,0.157872140066604,NA,NA,NA,NA
+"WA","DCdensity_McCrary_repl",0.08,"pooled",23.2764,7.6804e-120,0.3104,NA,NA,NA
+"WA","DCdensity_McCrary_repl",0.15,"pooled",3.1294,0.0018,0.0286,NA,NA,NA
+"WA","discrete_binom_k1",0.08,"pooled",998,0.771851575080584,NA,NA,NA,NA
+"WA","discrete_binom_k2",0.08,"pooled",998,0.363775716134946,NA,NA,NA,NA
+"WA","discrete_binom_k5",0.08,"pooled",998,0.563232091439827,NA,NA,NA,NA
+"WA","discrete_binom_k10",0.08,"pooled",998,0.548418017524427,NA,NA,NA,NA
+"WA","discrete_binom_k1",0.15,"pooled",1527,0.870423540769946,NA,NA,NA,NA
+"WA","discrete_binom_k2",0.15,"pooled",1527,0.678466558627327,NA,NA,NA,NA
+"WA","discrete_binom_k5",0.15,"pooled",1527,0.971117005474735,NA,NA,NA,NA
+"WA","discrete_binom_k10",0.15,"pooled",1527,1,NA,NA,NA,NA

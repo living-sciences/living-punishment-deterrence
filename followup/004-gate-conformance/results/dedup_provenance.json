@@ -1,0 +1,51 @@
+{
+  "raw_manifest_rows": 535,
+  "unique_sha256": 530,
+  "duplicate_file_occurrences": [
+    {
+      "filename": "STED-4-2025-6500-UP.pdf",
+      "year": 2025,
+      "month": 4,
+      "sha256": "a7853522bb2159bfb274cd8c9ff982669ca508e7a887fc1d14fc429f1736f4af",
+      "record_count": 489,
+      "dropped_rows": "[30844,31333)"
+    },
+    {
+      "filename": "STED-5-2025-6500-UP.pdf",
+      "year": 2025,
+      "month": 5,
+      "sha256": "96e3c8d65b03d31bb1c7071f3d7803abd46db038fb30a2b0f65463fad127e7ef",
+      "record_count": 667,
+      "dropped_rows": "[31333,32000)"
+    },
+    {
+      "filename": "STED-6-2025-6500-UP.pdf",
+      "year": 2025,
+      "month": 6,
+      "sha256": "498cf63f87216dca610e29d75b629fc8c4cbcce85a602d1a84d10225918284a6",
+      "record_count": 550,
+      "dropped_rows": "[32000,32550)"
+    },
+    {
+      "filename": "STED-01-2021-1275-1720.pdf",
+      "year": 2021,
+      "month": 1,
+      "sha256": "bb97cb1014e40bbc6022a90c4b913af4e37a9d39fcaf6bb5568f24028c5a6213",
+      "record_count": 356,
+      "dropped_rows": "[142998,143354)"
+    },
+    {
+      "filename": "STED-2-2021-6170-6500.pdf",
+      "year": 2021,
+      "month": 2,
+      "sha256": "c321afcef750a38cde150496e00748f392c6aa4d6671485cb48f7d00a7d699ec",
+      "record_count": 225,
+      "dropped_rows": "[147156,147381)"
+    }
+  ],
+  "raw_test_records": 165162,
+  "dedup_test_records": 162875,
+  "duplicate_records_dropped": 2287,
+  "raw_twosample_dui": 116934,
+  "dedup_twosample_dui": 115262
+}

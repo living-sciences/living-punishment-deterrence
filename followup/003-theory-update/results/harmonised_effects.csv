@@ -1,0 +1,19 @@
+study_id,outcome_from_csv,raw_value,conversion,result_rel_pct,horizon_yrs,population,open_level
+defigueiredo2015_008_deter,deters_weak,see note,pp -1.3 on ~1% base not convertible to a sensible relative; sign only,,1,first-time offenders,FULL
+defigueiredo2015_015,,see note,"range -0.1..+0.6pp, imprecise null; sign only",,0.2,first-time offenders,FULL
+rahman2022,deters,see note,"-3pp 2y post-removal, no baseline for a relative; sign only",,2,first-time high-range offenders,ABS
+sloan2016_prosecution,deters,-6.6,"published relative -6.6% (prosecution vs not), SEJ2016 abstract",-6.6,3,DWI arrestees,ABS
+sloan2016_conviction,deters,-24.5,"published relative -24.5% (conviction|prosecuted), SEJ2016 abstract",-24.5,3,DWI arrestees,ABS
+kilmer_midgette2020,deters,-49.0,published relative -49% re-arrest/revocation,-49.0,1,DUI arrestees,ABS
+gehrsitz2017,deters,-20.0,published relative -20%; authors attribute to deterrence not incap,-20.0,1,speeders,ABS
+jansson2025,deters,see note,"-80% per MONTH of prison = dose slope, not a single total effect; sign only + T4",,5,"DUI convicts (79,569)",FULL_intro
+suonpaa2021,,see note,"'small, insignificant' null, no number; sign only",,3,~35k DUI convicts,ABS
+agan2023,criminogenic,113.0,published -53% for NON-prosecution; harsher side=prosecution: 1/(1-0.53)-1=+113%,113.0,2,marginal misdemeanor defendants,ABS
+dobbie2018,,see note,"~0 net effect, no number; sign only",,,bail defendants,ABS
+leslie_pope2017,null_to_criminogenic,see note,incapacitation offset by later higher recidivism (null-to-criminogenic); sign only,,2,arraigned defendants,ABS
+rose_shemtov2021,deters,-44.0,published relative -44% (3y); diminishing returns,-44.0,3,felony defendants,ABS
+bhuller2020,deters,see note,"-29pp, no baseline for relative; sign only",,5,defendants,ABS
+mueller_smith_schnepel2021,criminogenic_record,100.0,diversion -50% -> harsher side=conviction: 1/(1-0.50)-1=+100% (record ~doubles reoffending),100.0,10,first-time felony defendants,ABS
+humphries2025,criminogenic_record,see note,conviction: large lasting increase; UNVERIFIED point estimates; sign only,,,felony defendants,FULL_intro
+finlay2024,,see note,"bounds -0.001..0.01 annual CONVICTION COUNTS, no relative reoffending & no baseline; sign only",,long run,traffic & criminal defendants,ABS
+huttunen_ladder,mixed,see note,"mixed: fines raise, probation/prison lower; multi-margin, no single number; sign only (fines-class=criminogenic)",,,criminal defendants,FULL_intro

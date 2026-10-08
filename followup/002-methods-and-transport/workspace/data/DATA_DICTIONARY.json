@@ -1,0 +1,27 @@
+{
+  "fl_tests_deid.parquet": {
+    "rows": 165162,
+    "grain": "one row per subject breath test (one STED page)",
+    "columns": {
+      "test_ym": "year-month of test (YYYY-MM; no day/time)",
+      "src_year_month": "year-month from source filename",
+      "violation": "violation code (DUI/BUI/COURT/ADMIN/PROB/COMM/OTHER/SYS/ZERO)",
+      "gender": "M/F/U (subject gender; a predetermined covariate)",
+      "sample1": "Subject Sample #1 BrAC g/210L (valid reading; NaN if none)",
+      "sample2": "Subject Sample #2 BrAC g/210L (valid reading; NaN if none)",
+      "refusal_flag": "Subject Test Refused present on page",
+      "volume_not_met_flag": "Volume Not Met present on page",
+      "instrument_pseudonym": "random integer per instrument serial (seed discarded; raw serial NOT stored)",
+      "n_valid_samples": "count of valid subject-sample readings on the page"
+    },
+    "dropped_in_memory": [
+      "subject surname",
+      "breath test operator name",
+      "arresting officer name",
+      "raw instrument serial",
+      "registered agency",
+      "day-of-month",
+      "time-of-day"
+    ]
+  }
+}

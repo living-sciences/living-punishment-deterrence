@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Build results/card_corrections.csv (old -> corrected -> reason), incl. the fabricated-claim row."""
+import csv
+RES="/workspace/eval/followup/004-gate-conformance/results"
+rows=[
+ # card, scope, old, corrected, reason, source
+ ("002","FL test count (all pages)","165,162","162,875",
+  "5 STED files listed twice in the 537-href FDLE index were ingested twice (+2,287 dup records); deduplicated by dropping the 2nd occurrence of each repeated sha256","dedup_provenance.json"),
+ ("002","FL two-sample DUI analysis N","116,934","115,262",
+  "same dedup (−1,672 duplicate two-sample DUI records)","dedup_provenance.json / fl_analysis.csv"),
+ ("002","'all 535 STED PDFs' / unique files","535","530 unique files (535 downloads, 530 distinct sha256)",
+  "535 downloads cover only 530 distinct files","workspace/data/fl_manifest.csv (dedup)"),
+ ("002","FL rddensity no-sorting p (0.08 / 0.15)","0.605 / 0.415","0.593 / 0.308",
+  "recomputed on deduplicated data","density_tests.csv / florida_power.csv"),
+ ("002","FL MDD (0.08 / 0.15)","0.196 / 0.123","0.1978 / 0.1234",
+  "recomputed on deduplicated data","florida_power.csv"),
+ ("002","0.08 power margin vs 2×WA","(not stated)","FL MDD 0.1978 vs 2×WA 0.1991 — underpowered rule NOT triggered, by only 0.0013 (razor-thin)",
+  "stated explicitly per audit","florida_power.csv"),
+ ("002","FL gender balance coef (p) 0.08 / 0.15","+0.0128 (0.558) / +0.0063 (0.402)","+0.0104 (0.640) / +0.0065 (0.394)",
+  "recomputed on deduplicated data; both CIs still include zero (balanced)","florida_gender_balance.csv"),
+ ("002","Per-year test counts 2021 / 2025","29,955 / 29,597","29,374 / 27,891",
+  "duplicated files were in 2021 and 2025","florida_counts.csv"),
+ ("002","Heaping: '~21% last digit 0 = heaps on round values'","21% (heaping on round thousandths)","10.25% excluding 0.000 readings (uniform, no excess)",
+  "the 21% was a 0.000-reading artifact: 12.08% of two-sample DUI tests have sample1=0.000; excluding zeros the digit-0 share is 10.25%","florida_lastdigit.csv"),
+ ("002","Transport-verdict caveat 'heaps on round BAC values at the thresholds (donut/heaping-robust required)'","present (round-value heaping caveat)","RETRACTED",
+  "no excess mass at or near either threshold: cutoff-bin ratios 1.05 (0.080) / 1.02 (0.150); 0.070/0.090/0.100 bins at or below neighbour mean; the caveat was produced by the 0.000-reading artifact","florida_roundvalue_check.csv"),
+ ("002","Donut re-run 'drop all round bins' p (0.08/0.15)","0.32 / 0.22 (reported as robustness)","REMOVED",
+  "that donut was motivated by the misread heaping; the cutoff-bin donut (0.640 / 0.268) is retained","florida_density_donut.csv"),
+ ("002","B-pre block header 'written before any Florida estimate'","claims pre-declaration","RELABELLED post-hoc (written at step [128], after all Florida estimates ran at [111]-[117])",
+  "the block cannot claim pre-declaration; restored to report.md; spec wording restored ('the power stated in B1')","findings.md (004)"),
+ ("002","Structural audit '100% two-extractor agreement'","100% field agreement (two extractors)","REMOVED — what was compared was page-level BrAC TOKEN MULTISETS + presence flags; the field-level -layout/-raw comparison had failed at 0.000; nflds.add(9) was hard-coded; raw-token smax 3.4-4.6 (outside BrAC [0,0.5]) was unremarked",
+  "a genuine two-extractor re-parse is impossible (raw PDFs deleted at ingest, no fetch); field-level validity audit on 30 dedup pages/yr: per-field pass 100% except n_valid_samples 99.44%; in-parquet readings all within [0,0.478]","florida_field_audit.json"),
+ ("002","H2 template on card metric 2","CIs only, no point estimate","point estimates added for BOTH 0.15 codings (statutory −0.0074, strict −0.0112)",
+  "full H2 template required everywhere","estimates_headline.csv (002)"),
+ ("002","Bandwidth-significance ranges (kernel)","unlabelled ('h ≥ 0.038', 'h ≥ 0.034', '0.15 includes zero at every h')","labelled triangular; rectangular exception noted: 0.15 statutory RBC EXCLUDES zero for h ≥ 0.060; 0.15 strict rectangular non-monotone; 0.08 rectangular h ≥ 0.026 (gap at 0.030)",
+  "the ranges held only for the triangular kernel; bandwidth_curve.csv carries both kernels","bandwidth_curve.csv (002)"),
+ ("002","'RBC excludes zero at MSE-optimal h / includes below 0.038'","stated without reconciliation","b=h grid note added: the A3 grid fixes b=h while the MSE-optimal fit uses b=0.043",
+  "otherwise the two statements appear to contradict","_a3_signinfo.json (002)"),
+ ("002","Era sentence 'estimates negative across 1999-2007'","true (claimed at both thresholds)","FALSE at 0.15: 2001 = +0.004, 2004 = +0.012; true only at 0.08",
+  "corrected per eras.csv","eras.csv (002)"),
+ ("002","0.08 strict A4 result","omitted from narrative","surfaced: strict A1 = −0.0111 (0.0063), RBC CI [−0.0233, 0.0063] INCLUDES zero",
+  "A4 sensitivity must be reported","sensitivity_008.csv (002)"),
+ ("002","Word 'robust' in Florida notes","'no-sorting robust to donut' / 'robust'","removed from the Florida transport notes",
+  "banned-word hygiene outside its verdict row","report.md / result_card.json (004)"),
+ ("003","APPENDIX in-sample claim 'including Hansen pulls the DUI severity-class mean slightly MORE negative'","FABRICATED (no code computed it) and directionally WRONG","in-sample fit ACTUALLY RUN: severity-class mean −37.7% → −27.8% = LESS negative (class signs unchanged); labelled appendix, not a test",
+  "FABRICATED CLAIM: no step in theory_update.py computed any in-sample fit; the sentence appeared only in a Write call","insample_appendix.json"),
+ ("003","Sign model — record-change class (on card)","DUI/general split: record 2/0/0 (deter) and 0/0/2 (criminogenic) — a split in NO persisted output, dropping Humphries","persisted _sign_model.csv: record_change 2/0/2 (majority ambiguous/null); Humphries in its own 'mixed' class; all 18 rows shown",
+  "the card's split existed in no output and dropped Humphries; the DUI/general split is now a disclosed post-hoc variant (general-crime record = 0/0/3, Humphries included)","_sign_model.csv / _sign_model_recordsplit_variant.csv"),
+ ("003","Huttunen-Kaila-Nix placement","counted in severity_norecord (direction criminogenic)","noted: coded criminogenic on its FINES finding but sits in the severity_norecord class in the persisted model; flagged, not silently moved",
+  "its criminogenic direction comes from the fines margin, not severity","margin_codes.csv / _sign_model.csv"),
+ ("003","T3-H prediction","hard-coded predict_sign() returning −1 with hand-written rationales","COMPUTED from the sign model + T0 codes: Hansen margins map to severity_norecord (majority deter, 7/12) → predict DETER",
+  "the prediction must be derived from the model, not hand-written","theory_update_004.py / hansen_oos_test.csv"),
+ ("003","0.15 statutory classification","CONSISTENT (asserted; uninformative clause never evaluated)","uninformative clause EVALUATED: both 001 CIs include zero (True) AND no-clear-majority (False — severity is 7/12 deter, a simple majority) → clause does not fire → CONSISTENT on sign; BUT 001 cannot reject zero here, and under a ⅔-supermajority reading of 'clear majority' the rule returns UNINFORMATIVE",
+  "the pre-declared uninformative clause had to be evaluated and justified; the label is borderline/sensitive","hansen_oos_test.csv"),
+ ("003","Card metric 1 (001 restatement)","A1 CI only (which excludes zero), A2 omitted","A2 honest CI co-reported alongside RBC",
+  "H2 requires both CIs","result_card.json (004)"),
+ ("003","'attenuates to ~0.8% per 10%' / '0.08 stays attenuated'","'attenuates / attenuated'","replaced with 001's pre-declared 'stable' labels (0.08 −22.1%, 0.15 statutory +1.5%, 0.15 strict +24.6%, all 'stable')",
+  "'attenuate' contradicts 001's pre-declared stability labels","report.md (004)"),
+ ("003","'identification confirmed by 001' / '001 confirmed the no-sorting identification holds in Florida'","present (banned word 'confirmed'; overstates)","removed; replaced with 001's reading 'feasible on identification grounds' (and now on deduplicated FL data)",
+  "'confirmed' is banned and overstates the B-pre reading","report.md (004)"),
+ ("003","Forest figure — Finlay 2024","plotted as a 0% point on the relative-effect axis","NOT plotted; annotated that Finlay's effect is conviction-count bounds (no relative-reoffending effect), sign-model only",
+  "a relative-% point cannot be shown for a conviction-count-bounds study","fig_margins_forest.png"),
+]
+with open(f"{RES}/card_corrections.csv","w",newline="") as f:
+    w=csv.writer(f)
+    w.writerow(["superseded_card","scope","old_value","corrected_value","reason","source_file"])
+    w.writerows(rows)
+print(f"wrote card_corrections.csv ({len(rows)} rows)")

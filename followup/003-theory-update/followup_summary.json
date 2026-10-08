@@ -1,0 +1,126 @@
+{
+  "instruction_summary": "Build a leave-Hansen-out model of which DUI sanction margins deter, predict Hansen's 0.08/0.15 margins out of sample, compare with the 001 methods re-analysis, and make falsifiable predictions.",
+  "completed": true,
+  "steps": [
+    {
+      "description": "Read completed methods-and-transport (001-equivalent) results from disk; verify gate1 (card completed) and gate2 (bin means 0.1043/0.1241)",
+      "command": "python3 theory_update.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/headline_scalars.json"
+      ]
+    },
+    {
+      "description": "Verify sha256 of all staged literature/utah/nhtsa inputs against PROVENANCE (gate2)",
+      "command": "sha256sum shared-data/literature/*.pdf *.csv",
+      "exit_code": 0,
+      "outputs": []
+    },
+    {
+      "description": "Write T0 Hansen codes + T2 non-Hansen margin codes BEFORE the fit (gate4)",
+      "command": "python3 theory_update.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/margin_codes.csv"
+      ]
+    },
+    {
+      "description": "Fit sign model (all rows) + descriptive regression (n=7<8); T1 harmonisation",
+      "command": "python3 theory_update.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/_sign_model.csv",
+        "results/harmonised_effects.csv"
+      ]
+    },
+    {
+      "description": "T3-H out-of-sample prediction + classification of Hansen's margins",
+      "command": "python3 theory_update.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/hansen_oos_test.csv"
+      ]
+    },
+    {
+      "description": "T4 re-analysed elasticities + labelled jail-day upper bounds; T5 Utah .05 shares",
+      "command": "python3 theory_update.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/updated_elasticities.csv",
+        "results/utah_bac_shares.csv"
+      ]
+    },
+    {
+      "description": "Figures: margins forest + Utah .05 bars",
+      "command": "python3 figs.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/fig_margins_forest.png",
+        "results/fig_utah_005.png"
+      ]
+    }
+  ],
+  "key_results": {
+    "T3H_classification_0.08": "consistent (model predicts deter; 001 A1 rel -16.6%)",
+    "T3H_classification_0.15_statutory": "consistent (predict deter; 001 A1 rel -6.0%)",
+    "T3H_classification_0.15_strict": "consistent (predict deter; 001 A1 rel -9.1%)",
+    "sign_model_severity_norecord": "DETER (7 deter / 3 null / 2 crim of 12)",
+    "sign_model_record_change": "splits by domain: DUI deters (Sloan -6.6/-24.5%), general crime criminogenic (Agan +113%, Mueller-Smith-Schnepel +100%)",
+    "reanalysed_elasticity_0.08": -0.214,
+    "reanalysed_elasticity_0.15_strict": -0.121,
+    "reanalysed_elasticity_0.15_statutory": -0.08,
+    "jail_day_upper_bound_0.08_pct_per_day": -4.31,
+    "jansson_pct_per_prison_day": -2.67,
+    "utah_005_007_share_before_after": "4.7% -> 10.1% (2.1x, partly mechanical)",
+    "answer_to_requester": "The newer prosecution/jail studies do NOT contradict Hansen; they identify a record/stigma channel in general crime, distinct from Hansen's experienced-severity DUI margins."
+  },
+  "comparison_to_original": [
+    {
+      "quantity": "0.08 deterrence elasticity",
+      "original": "-0.22",
+      "followup": "-0.214",
+      "source_file": "analyze/paper_claims.json (C14) / followup/002-methods-and-transport/results/headline_scalars.json",
+      "note": "~97% survives 2026 inference on same data"
+    },
+    {
+      "quantity": "0.15 deterrence elasticity",
+      "original": "-0.12",
+      "followup": "statutory -0.080; strict -0.121",
+      "source_file": "analyze/paper_claims.json (C14)",
+      "note": "strict coding ~100% survives; statutory ~66% (attenuates, CI incl 0)"
+    },
+    {
+      "quantity": "0.08 recidivism effect (relative)",
+      "original": "-17% (paper) / -0.0221 abs (paper method, same file)",
+      "followup": "-16.6% (001 A1 RBC)",
+      "source_file": "followup/002-methods-and-transport/results/estimates_headline.csv",
+      "note": "sign consistent with leave-Hansen-out model prediction (deter)"
+    },
+    {
+      "quantity": "Sign of record-change effect",
+      "original": "Hansen: DUI conviction bundle deters",
+      "followup": "DUI record deters (Sloan); general-crime record criminogenic (Agan/Mueller-Smith)",
+      "source_file": "shared-data/literature/sanctions_reoffending_evidence.csv",
+      "note": "domain split explains the apparent contradiction with newer studies"
+    }
+  ],
+  "artifacts": [
+    "results/model.md",
+    "results/margin_codes.csv",
+    "results/harmonised_effects.csv",
+    "results/hansen_oos_test.csv",
+    "results/updated_elasticities.csv",
+    "results/utah_bac_shares.csv",
+    "results/_sign_model.csv",
+    "results/headline_scalars.json",
+    "results/fig_margins_forest.png",
+    "results/fig_utah_005.png"
+  ],
+  "deviations": [
+    "Part II spec reads followup/001-methods-and-transport/results/, which is EMPTY (001 cut short); used the completed continuation study followup/002-methods-and-transport (result_card status=completed) as the 001 input.",
+    "Regression descriptive only (n=7<8, pre-declared H8); OLS rank-deficient so class means used; sign model carries inference.",
+    "Branch N: 0.15 carried under both codings (do-files not obtained).",
+    "Agan & Mueller-Smith-Schnepel magnitudes are sign-convention conversions of published non-prosecution/diversion effects (arithmetic in harmonised_effects.csv / model.md).",
+    "notes/2026-09-09-followup-studies-handoff.md contract file not present in run dir; followed the schemas in the instruction and result-presentation skill."
+  ]
+}

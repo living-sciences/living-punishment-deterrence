@@ -1,0 +1,267 @@
+{
+  "instruction_summary": "Corrective study superseding the Hansen (2015) follow-ups 002+003: deduplicate the Florida STED ingest (5 files ingested twice), recompute every Florida density/balance/MDD/heaping number, retract the round-value-heaping caveat (a 0.000-reading artifact), report the honest versions of all audit-flagged reporting gates in 002, and in 003 delete-or-run the fabricated in-sample claim, present the sign model as persisted, compute the T3-H prediction from the model, and fix the 001 restatements.",
+  "completed": true,
+  "steps": [
+    {
+      "description": "Read provenance audit (authoritative), 002/003 code, results, cards, reports, parquet shards, manifest",
+      "command": "Read hansen-provenance.md + 002/003 artifacts",
+      "exit_code": 0,
+      "outputs": []
+    },
+    {
+      "description": "Rebuild /workspace/.venv (pandas/numpy/statsmodels/scipy/matplotlib/pyarrow) and point R_LIBS at the 002 rlib (rdrobust/rddensity/RDHonest)",
+      "command": "uv venv /workspace/.venv && uv pip install pandas numpy statsmodels matplotlib scipy pyarrow",
+      "exit_code": 0,
+      "outputs": []
+    },
+    {
+      "description": "Verify parquet rows map 1:1 to manifest rows in processing order (100% src_year_month match); identify 5 duplicated sha256 files (+2,287 dup records)",
+      "command": "python3 (verification)",
+      "exit_code": 0,
+      "outputs": []
+    },
+    {
+      "description": "Deduplicate: drop 2nd occurrence of each repeated sha256 -> 162,875 tests / 115,262 two-sample DUI / 530 files; rebuild fl_tests_deid.parquet, fl_analysis.csv, manifest, per-year counts",
+      "command": "python3 workspace/dedup.py",
+      "exit_code": 0,
+      "outputs": [
+        "workspace/data/fl_tests_deid.parquet",
+        "workspace/data/fl_analysis.csv",
+        "workspace/data/fl_manifest.csv",
+        "results/dedup_provenance.json",
+        "results/florida_counts.csv"
+      ]
+    },
+    {
+      "description": "Recompute FL/WA density, MDD, power, pooled + by-year discrete tests (the by-year run 002 omitted) on deduplicated data",
+      "command": "R_LIBS_USER=... Rscript workspace/panelB_density_004.R",
+      "exit_code": 0,
+      "outputs": [
+        "results/density_tests.csv",
+        "results/florida_power.csv",
+        "results/fl_vs_wa_comparison.csv"
+      ]
+    },
+    {
+      "description": "Recompute heaping EXCLUDING 0.000 readings (10.25% uniform vs 21% artifact), round-value check, cutoff-bin donut, gender balance on dedup data",
+      "command": "R_LIBS_USER=... Rscript workspace/panelB_heaping_004.R",
+      "exit_code": 0,
+      "outputs": [
+        "results/florida_lastdigit.csv",
+        "results/florida_lastdigit_byinstrument.csv",
+        "results/florida_heaping_shares.csv",
+        "results/florida_roundvalue_check.csv",
+        "results/florida_density_donut.csv",
+        "results/florida_gender_balance.csv"
+      ]
+    },
+    {
+      "description": "Structural-audit honesty: per-field validity audit on 30 dedup pages/yr (two-extractor re-parse impossible: PDFs deleted, no fetch); report true rates + in-parquet reading range",
+      "command": "python3 workspace/field_audit_004.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/florida_field_audit.json"
+      ]
+    },
+    {
+      "description": "003 corrective: compute T3-H prediction from the sign model + T0 codes, evaluate the uninformative clause, present sign model as persisted (+ disclosed record-split variant), RUN the in-sample appendix",
+      "command": "python3 workspace/theory_update_004.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/_sign_model.csv",
+        "results/_sign_model_recordsplit_variant.csv",
+        "results/hansen_oos_test.csv",
+        "results/margin_codes.csv",
+        "results/harmonised_effects.csv",
+        "results/updated_elasticities.csv",
+        "results/utah_bac_shares.csv",
+        "results/insample_appendix.json",
+        "results/headline_scalars_003.json"
+      ]
+    },
+    {
+      "description": "Regenerate figures on dedup data; fix Finlay (annotate, not 0%); copy unchanged WA bandwidth curve",
+      "command": "python3 workspace/figs_florida_004.py && python3 workspace/figs_theory_004.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/fig_florida_hist.png",
+        "results/fig_fl_vs_wa_density.png",
+        "results/fig_margins_forest.png",
+        "results/fig_utah_005.png",
+        "results/fig_bandwidth_curve.png"
+      ]
+    },
+    {
+      "description": "Write card_corrections.csv (old->corrected->reason, 28 rows incl. fabricated-claim row), findings.md, report.md, result_card.json",
+      "command": "python3 workspace/make_corrections.py + Write",
+      "exit_code": 0,
+      "outputs": [
+        "results/card_corrections.csv",
+        "results/findings.md",
+        "report.md",
+        "result_card.json"
+      ]
+    }
+  ],
+  "key_results": {
+    "FL_tests_dedup": "162,875 (was 165,162; -2,287 duplicate records)",
+    "FL_two_sample_DUI_dedup": "115,262 (was 116,934)",
+    "FL_unique_files": "530 (535 downloads; was reported as 535)",
+    "FL_rddensity_p_0.08_0.15": "0.593 / 0.308 (was 0.605 / 0.415)",
+    "FL_MDD_0.08_0.15": "0.1978 / 0.1234 (was 0.196 / 0.123)",
+    "FL_0.08_power_margin_to_2xWA": "FL 0.1978 vs 2xWA 0.1991 = -0.0013 (razor-thin; underpowered rule not triggered)",
+    "FL_gender_balance_p_0.08_0.15": "0.640 / 0.394 (was 0.558 / 0.402); both CIs include zero",
+    "FL_lastdigit0_share": "10.25% excluding 0.000 readings (uniform); the ~21% was a 0.000-reading artifact (12.08% of tests)",
+    "FL_roundvalue_excess": "none (cutoff ratio 1.05/1.02; 0.070/0.090/0.100 bins at or below neighbour mean) -> caveat RETRACTED",
+    "FL_field_validity_audit": "100% per field except n_valid_samples 99.44%; in-parquet readings all in [0,0.478] (two-extractor re-parse impossible)",
+    "WA_0.08_A1_RBC": "-0.0173 [-0.0307,-0.0023] excl.0 (UNCHANGED); honest [-0.0310,0.0010] incl.0; stable -22.1%",
+    "WA_0.15_statutory_A1_RBC": "-0.0074 [-0.0185,0.0043] incl.0 (triangular); rectangular EXCLUDES 0 for h>=0.060",
+    "WA_0.15_strict_A1_RBC": "-0.0112 [-0.0228,-0.0007] excl.0",
+    "WA_0.08_strict_A4": "-0.0111 (0.0063), RBC [-0.0233,0.0063] INCLUDES zero (surfaced)",
+    "WA_eras_0.15_positive_years": "2001 +0.004, 2004 +0.012 (so 'negative across 1999-2007' is false at 0.15)",
+    "theory_sign_model_persisted": "severity 7/3/2 deter; record 2/0/2 ambiguous; mixed(Humphries) 0/0/1; monetary(Finlay) 0/1/0; 18 rows",
+    "theory_T3H_classification": "0.08 consistent; 0.15 strict consistent; 0.15 statutory consistent* (uninformative under a 2/3-supermajority reading; both 001 CIs include zero)",
+    "theory_insample_appendix": "severity-class mean -37.7% -> -27.8% (LESS negative) when Hansen added; the fabricated '-more negative' claim was directionally wrong and had no code"
+  },
+  "comparison_to_original": [
+    {
+      "quantity": "FL test records (all pages)",
+      "original": "165,162",
+      "followup": "162,875",
+      "source_file": "002-methods-and-transport/workspace/data/DATA_DICTIONARY.json",
+      "note": "5 files ingested twice; -2,287 duplicate records removed"
+    },
+    {
+      "quantity": "FL two-sample DUI analysis N",
+      "original": "116,934",
+      "followup": "115,262",
+      "source_file": "002-methods-and-transport/workspace/data/fl_analysis.csv (116,935 lines incl header)",
+      "note": "-1,672 duplicate two-sample DUI records"
+    },
+    {
+      "quantity": "Unique STED files",
+      "original": "535",
+      "followup": "530",
+      "source_file": "002-methods-and-transport/workspace/data/fl_manifest.csv",
+      "note": "535 rows but only 530 distinct sha256"
+    },
+    {
+      "quantity": "FL rddensity p (0.08 / 0.15)",
+      "original": "0.605 / 0.415",
+      "followup": "0.593 / 0.308",
+      "source_file": "002-methods-and-transport/results/density_tests.csv",
+      "note": "recomputed on deduplicated data; no conclusion flips"
+    },
+    {
+      "quantity": "FL MDD (0.08 / 0.15)",
+      "original": "0.196 / 0.123",
+      "followup": "0.1978 / 0.1234",
+      "source_file": "002-methods-and-transport/results/florida_power.csv",
+      "note": "0.08 margin to 2xWA is only 0.0013"
+    },
+    {
+      "quantity": "FL gender balance p (0.08 / 0.15)",
+      "original": "0.558 / 0.402",
+      "followup": "0.640 / 0.394",
+      "source_file": "002-methods-and-transport/results/florida_gender_balance.csv",
+      "note": "both CIs still include zero"
+    },
+    {
+      "quantity": "Last-digit-0 share / interpretation",
+      "original": "~21% = heaps on round values",
+      "followup": "10.25% excl. 0.000 readings (uniform); caveat retracted",
+      "source_file": "002-methods-and-transport/results/florida_lastdigit.csv",
+      "note": "21% was a 0.000-reading artifact (12.08% of tests)"
+    },
+    {
+      "quantity": "Structural audit claim",
+      "original": "100% two-extractor agreement",
+      "followup": "token-multiset agreement only; field validity 99.44%; re-parse impossible",
+      "source_file": "002-methods-and-transport/results/florida_parse_audit.json",
+      "note": "field-level -layout/-raw had failed at 0.000; nflds hard-coded; smax 3.4-4.6 unremarked"
+    },
+    {
+      "quantity": "Era sign at 0.15",
+      "original": "negative across 1999-2007",
+      "followup": "2001 +0.004, 2004 +0.012 (positive)",
+      "source_file": "002-methods-and-transport/results/eras.csv",
+      "note": "true at 0.08 only"
+    },
+    {
+      "quantity": "003 in-sample appendix direction",
+      "original": "pulls DUI severity-class mean MORE negative (fabricated, no code)",
+      "followup": "-37.7% -> -27.8% = LESS negative (actually run)",
+      "source_file": "003-theory-update/results/model.md (no code existed)",
+      "note": "fabricated sentence, directionally wrong; named in card_corrections.csv"
+    },
+    {
+      "quantity": "003 record-change class",
+      "original": "DUI 2/0/0 & general 0/0/2 (split in no output; drops Humphries)",
+      "followup": "2/0/2 ambiguous; Humphries in own class; 18 rows",
+      "source_file": "003-theory-update/results/_sign_model.csv",
+      "note": "DUI/general split now a disclosed variant (general 0/0/3 incl Humphries)"
+    },
+    {
+      "quantity": "003 T3-H prediction",
+      "original": "hard-coded predict_sign() returning -1",
+      "followup": "computed from sign model + T0 codes (severity majority deter)",
+      "source_file": "003-theory-update/workspace/theory_update.py",
+      "note": "0.15 statutory uninformative clause now evaluated"
+    }
+  ],
+  "gate3_versions": {
+    "R": "4.6.1",
+    "rdrobust": "4.0.0",
+    "rddensity": "3.0",
+    "RDHonest": "1.0.2",
+    "lpdensity": "3.0.1",
+    "python": "3.12.8",
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1",
+    "pyarrow": "25.0.1",
+    "masspoints": "adjust"
+  },
+  "artifacts": [
+    "results/report.md (top-level: /workspace/eval/followup/004-gate-conformance/report.md)",
+    "results/findings.md",
+    "results/card_corrections.csv",
+    "results/dedup_provenance.json",
+    "results/density_tests.csv",
+    "results/florida_power.csv",
+    "results/fl_vs_wa_comparison.csv",
+    "results/florida_counts.csv",
+    "results/florida_lastdigit.csv",
+    "results/florida_lastdigit_byinstrument.csv",
+    "results/florida_heaping_shares.csv",
+    "results/florida_roundvalue_check.csv",
+    "results/florida_density_donut.csv",
+    "results/florida_gender_balance.csv",
+    "results/florida_field_audit.json",
+    "results/_sign_model.csv",
+    "results/_sign_model_recordsplit_variant.csv",
+    "results/hansen_oos_test.csv",
+    "results/margin_codes.csv",
+    "results/harmonised_effects.csv",
+    "results/updated_elasticities.csv",
+    "results/utah_bac_shares.csv",
+    "results/insample_appendix.json",
+    "results/headline_scalars_003.json",
+    "results/fig_bandwidth_curve.png",
+    "results/fig_florida_hist.png",
+    "results/fig_fl_vs_wa_density.png",
+    "results/fig_margins_forest.png",
+    "results/fig_utah_005.png",
+    "workspace/data/fl_tests_deid.parquet",
+    "workspace/data/fl_analysis.csv",
+    "workspace/data/fl_manifest.csv"
+  ],
+  "deviations": [
+    "Item 4 (genuine field-level two-extractor agreement check) cannot be done as written: the raw STED PDFs were deleted page-by-page at ingest (privacy design) and this study permits no new fetches. Substituted the closest defensible version: an in-parquet per-field validity audit on a 30-pages/year deduplicated sample (true rates reported; 99.44% n_valid_samples, readings all within [0,0.478]). No conclusion depends on this substitution.",
+    "0.15 statutory T3-H classification is borderline: consistent under a simple-majority reading of the pre-declared 'clear majority' (severity 7/12 deter), uninformative under a 2/3-supermajority reading. Both are reported; 001 cannot reject zero at this coding.",
+    "Washington Panel A was NOT re-estimated (unchanged; the audit verified the WA computation sound) - its values are reused verbatim from 002 results on disk.",
+    "In-sample appendix uses the paper's relative effects (-17/-9) to match the audit's -27.8% arithmetic; the 001-A1 variant (-27.7%) is reported alongside.",
+    "Ops (for the record): the orchestrator redacted transcript step [69] (a masked-page print exposing test day/time and masked surname lengths; no name disclosed) from the 002 transcript and host log on 2026-10-07, and deleted the host session copies; the audit's own quoted leak was likewise redacted from the staged audit copy, this study's transcript, and its log."
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "method": "per-field validity audit on 30 deduplicated pages/year (single-extractor; two-extractor -layout/-raw re-parse not possible: raw PDFs deleted at ingest, no fetch allowed)",
+  "n_pages_sampled": 180,
+  "per_field_pass_rate": {
+    "test_ym_fmt": 1.0,
+    "violation_domain": 1.0,
+    "gender_domain": 1.0,
+    "sample1_range": 1.0,
+    "sample2_range": 1.0,
+    "nvalid_consistent": 0.9944444444444445,
+    "flags_bool": 1.0
+  },
+  "per_year": {
+    "2021": {
+      "test_ym_fmt": 1.0,
+      "violation_domain": 1.0,
+      "gender_domain": 1.0,
+      "sample1_range": 1.0,
+      "sample2_range": 1.0,
+      "nvalid_consistent": 1.0,
+      "flags_bool": 1.0,
+      "pages": 30
+    },
+    "2022": {
+      "test_ym_fmt": 1.0,
+      "violation_domain": 1.0,
+      "gender_domain": 1.0,
+      "sample1_range": 1.0,
+      "sample2_range": 1.0,
+      "nvalid_consistent": 1.0,
+      "flags_bool": 1.0,
+      "pages": 30
+    },
+    "2023": {
+      "test_ym_fmt": 1.0,
+      "violation_domain": 1.0,
+      "gender_domain": 1.0,
+      "sample1_range": 1.0,
+      "sample2_range": 1.0,
+      "nvalid_consistent": 1.0,
+      "flags_bool": 1.0,
+      "pages": 30
+    },
+    "2024": {
+      "test_ym_fmt": 1.0,
+      "violation_domain": 1.0,
+      "gender_domain": 1.0,
+      "sample1_range": 1.0,
+      "sample2_range": 1.0,
+      "nvalid_consistent": 1.0,
+      "flags_bool": 1.0,
+      "pages": 30
+    },
+    "2025": {
+      "test_ym_fmt": 1.0,
+      "violation_domain": 1.0,
+      "gender_domain": 1.0,
+      "sample1_range": 1.0,
+      "sample2_range": 1.0,
+      "nvalid_consistent": 1.0,
+      "flags_bool": 1.0,
+      "pages": 30
+    },
+    "2026": {
+      "test_ym_fmt": 1.0,
+      "violation_domain": 1.0,
+      "gender_domain": 1.0,
+      "sample1_range": 1.0,
+      "sample2_range": 1.0,
+      "nvalid_consistent": 0.9666666666666667,
+      "flags_bool": 1.0,
+      "pages": 30
+    }
+  },
+  "inparquet_reading_range": {
+    "sample1_min": 0.0,
+    "sample1_max": 0.478,
+    "sample2_min": 0.0,
+    "sample2_max": 0.468,
+    "sample1_out_of_range": 0,
+    "sample2_out_of_range": 0
+  },
+  "note_002_structural_audit": "002 reported '100% agreement' on BrAC TOKEN MULTISETS + presence flags, NOT parsed fields; its field-level -layout-vs-raw comparison had failed at 0.000 agreement (parser is layout-dependent); schema width was hard-coded (nflds.add(9)); raw-token smax ranged 3.417-4.562 (outside BrAC [0,0.5]) and went unremarked. In-parquet subject-sample readings ARE within [0,0.5] (range check below)."
+}

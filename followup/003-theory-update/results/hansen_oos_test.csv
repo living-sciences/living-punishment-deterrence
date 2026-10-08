@@ -1,0 +1,4 @@
+margin,coding,predicted_sign,predicted_interval,rel_A1_pct,A1_CI_rel,A2_CI_rel,A1_excludes0,A2_excludes0,classification,rationale
+Hansen_0.08,n/a,deter(-),"none (n<8: descriptive regression, sign model carries inference)",-16.55,"[-29.43,-2.17]","[-29.71,+0.92]",True,False,consistent,severity_norecord majority=deter AND DUI-specific record (Sloan)=deter -> predict DETER
+Hansen_0.15,statutory >=0.150,deter(-),"none (n<8: descriptive regression, sign model carries inference)",-5.98,"[-14.90,+3.44]","[-15.58,+5.50]",False,False,consistent,"pure severity_norecord, DUI-specific; severity class majority=deter -> predict DETER"
+Hansen_0.15,strict >0.150,deter(-),"none (n<8: descriptive regression, sign model carries inference)",-9.06,"[-18.35,-0.54]","[-20.16,+0.75]",True,False,consistent,"pure severity_norecord, DUI-specific; severity class majority=deter -> predict DETER"

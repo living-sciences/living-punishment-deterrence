@@ -1,0 +1,146 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "Corrective superseding 002+003: on the unchanged Washington file under 2026 RD inference the recidivism effect is bandwidth-dependent with a stable point estimate (0.08 RBC [-0.031,-0.002] excl. 0, honest [-0.031,0.001] incl. 0); on DEDUPLICATED Florida data (165,162->162,875 tests; 5 files had been ingested twice) there is still no sorting (rddensity p 0.593/0.308), and the '21% round-value heaping' was a 0.000-reading artifact (10.25% excl. zeros, uniform).",
+  "status": "completed",
+  "metrics": [
+    {
+      "label": "WA 0.08 recidivism RD (A1 RBC + A2 honest, 2026 inference) \u2014 UNCHANGED",
+      "value": "A1 -0.0173, RBC CI [-0.031,-0.002] excl. 0; A2 honest -0.0150, CI [-0.031,0.001] incl. 0",
+      "baseline": "A0 same-file -0.0221; paper -0.021",
+      "baseline_label": "paper method on same file (002 estimates_headline.csv) / Hansen 2015",
+      "note": "Bandwidth-dependent; point estimate stable (-22.1% vs A0). Triangular: RBC excl. 0 for h>=0.038; rectangular h>=0.026. Honest CI 2.04x wider than paper SE. b=h grid note: MSE-opt fit uses b=0.043."
+    },
+    {
+      "label": "WA 0.15, both codings (Branch N) \u2014 UNCHANGED",
+      "value": "statutory >=: A1 -0.0074, RBC [-0.019,0.004] incl. 0, honest [-0.019,0.007] incl. 0; strict >: A1 -0.0112, RBC [-0.023,-0.001] excl. 0, honest [-0.025,0.001] incl. 0",
+      "baseline": "A0 same-file -0.0073 / -0.0090; paper -0.010",
+      "baseline_label": "paper method on same file (002 estimates_headline.csv) / Hansen 2015",
+      "note": "Coding unresolved; do-files not obtained. Both stable. Triangular: statutory incl. 0 at every h; RECTANGULAR excl. 0 for h>=0.060. 0.08-strict A4: RBC [-0.0233,0.0063] incl. 0. Eras at 0.15: 2001 +0.004, 2004 +0.012 (not all negative)."
+    },
+    {
+      "label": "Florida no-sorting transport check \u2014 DEDUPLICATED",
+      "value": "rddensity p = 0.593 (0.08) / 0.308 (0.15); gender balanced (p 0.640/0.394); by-year discrete tests all p>0.18",
+      "baseline": "WA p = 0.144 / 0.158 (same rddensity)",
+      "baseline_label": "this study, deduplicated (density_tests.csv)",
+      "note": "5 STED files were ingested twice (+2,287 records); deduplicated to 530 files / 162,875 tests / 115,262 two-sample DUI. No sorting; design feasible on identification grounds. Neither outcome bears on Hansen's Washington estimates."
+    },
+    {
+      "label": "Florida heaping \u2014 CORRECTED (was a 0.000-reading artifact)",
+      "value": "last-digit-0 = 10.25% excluding 0.000 readings (uniform); no round-value excess at thresholds",
+      "baseline": "002 reported ~21% ('heaps on round values')",
+      "baseline_label": "002 florida_lastdigit.csv (superseded)",
+      "note": "12.08% of tests have sample1=0.000; excluding them the digit-0 share is uniform. Round-value-heaping caveat RETRACTED. Cutoff-bin donut leaves no discontinuity (p 0.640/0.268)."
+    },
+    {
+      "label": "003 theory update \u2014 corrected (fabricated claim removed, prediction computed)",
+      "value": "in-sample appendix RUN: severity mean -37.7%->-27.8% (LESS negative, opposite of the fabricated 'more negative'); T3-H all consistent (0.15 statutory borderline)",
+      "baseline": "model fitted WITHOUT Hansen predicts DETER at both thresholds",
+      "baseline_label": "leave-Hansen-out sign model (hansen_oos_test.csv)",
+      "note": "Sign model as persisted: record 2/0/2 ambiguous, Humphries in own class, 18 rows. Prediction computed (not hard-coded). 0.15 statutory: both 001 CIs incl. 0, severity majority 7/12 -> consistent on sign, uninformative under a 2/3 rule."
+    }
+  ],
+  "tables": [
+    {
+      "title": "Deduplicated Florida vs 002 (superseded)",
+      "columns": [
+        "Quantity",
+        "002 (superseded)",
+        "004 corrected"
+      ],
+      "rows": [
+        [
+          "Tests / two-sample DUI / files",
+          "165,162 / 116,934 / 535",
+          "162,875 / 115,262 / 530"
+        ],
+        [
+          "rddensity p (0.08 / 0.15)",
+          "0.605 / 0.415",
+          "0.593 / 0.308"
+        ],
+        [
+          "MDD (0.08 / 0.15)",
+          "0.196 / 0.123",
+          "0.1978 / 0.1234"
+        ],
+        [
+          "0.08 MDD vs 2xWA (0.1991)",
+          "(not stated)",
+          "0.1978 \u2014 razor-thin, by 0.0013"
+        ],
+        [
+          "gender balance p (0.08 / 0.15)",
+          "0.558 / 0.402",
+          "0.640 / 0.394"
+        ],
+        [
+          "last-digit-0 share",
+          "~21% (round-value heaping)",
+          "10.25% excl. zeros (uniform)"
+        ]
+      ],
+      "highlight_row": 0
+    },
+    {
+      "title": "Sign model as persisted (003 card's DUI/general split existed in no output)",
+      "columns": [
+        "Margin class",
+        "n",
+        "deter/null/crim",
+        "Majority"
+      ],
+      "rows": [
+        [
+          "severity / certainty, no record",
+          "12",
+          "7/3/2",
+          "deter"
+        ],
+        [
+          "record change",
+          "4",
+          "2/0/2",
+          "ambiguous/null"
+        ],
+        [
+          "mixed (Humphries 2025)",
+          "1",
+          "0/0/1",
+          "criminogenic"
+        ],
+        [
+          "monetary only (Finlay 2024)",
+          "1",
+          "0/1/0",
+          "null"
+        ]
+      ],
+      "highlight_row": 1
+    }
+  ],
+  "figures": [
+    {
+      "file": "results/fig_bandwidth_curve.png",
+      "caption": "A3 bandwidth curve (Washington, UNCHANGED): RD estimate and RBC 95% CI vs bandwidth (triangular kernel), paper points overlaid. Significance is bandwidth-dependent; the 0.15 statutory CI includes zero at every h (triangular), the strict coding excludes it for h >= 0.034.",
+      "alt": "Three panels of RD estimate vs bandwidth with RBC confidence bands and overlaid paper points"
+    },
+    {
+      "file": "results/fig_fl_vs_wa_density.png",
+      "caption": "No-sorting transport check on DEDUPLICATED Florida data: log-density jump with 95% CI at 0.08 and 0.15 for Florida (this study) and Washington (same rddensity test); both cover zero at both thresholds.",
+      "alt": "Point-and-CI comparison of log-density jump for Florida and Washington at two thresholds, all intervals crossing zero"
+    },
+    {
+      "file": "results/fig_margins_forest.png",
+      "caption": "Which sanction margins deter (post-2015, Hansen excluded): severity/DUI-record studies deter (left of zero), general-crime record studies are criminogenic (far right) (DUI/general split = disclosed post-hoc variant; persisted record class 2/0/2, majority ambiguous); Hansen's 001 estimates are negative and all three are classified consistent. Finlay (fines-only) is sign-model only and is NOT plotted at 0% (conviction-count bounds, no relative effect).",
+      "alt": "Forest plot: severity and DUI-record studies left of zero, general-crime record far right, Hansen estimates negative with confidence bars"
+    }
+  ],
+  "notes": [
+    "Supersedes 002 (methods + Florida transport) and 003 (theory update). Full old->corrected ledger: results/card_corrections.csv (28 rows).",
+    "Washington Panel A was NOT re-estimated (the audit verified it sound); it is reused unchanged. The recidivism headline is not re-estimated on new data (none exists). Branch N: both 0.15 codings carry equal standing.",
+    "Florida dedup works entirely from the existing 002 parquet shards (no fetch): rows map 1:1 to manifest rows; the 2nd occurrence of each of 5 duplicated files was dropped.",
+    "Item-4 limitation: a two-extractor field-level re-audit is impossible (raw PDFs deleted at ingest, no fetch); the closest version (in-parquet per-field validity on 30 dedup pages/yr; 99.44% n_valid_samples, readings all in [0,0.478]) was run instead.",
+    "003 fabricated sentence (in-sample appendix) named in card_corrections.csv; it was run for real and is directionally opposite what was claimed. All names were dropped in memory and never written to disk; the orchestrator redacted transcript step [69] and the audit-quoted leak from all transcripts/logs on 2026-10-07; host session copies deleted."
+  ],
+  "report_file": "report.md"
+}

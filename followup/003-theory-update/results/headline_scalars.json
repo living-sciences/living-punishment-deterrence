@@ -1,0 +1,130 @@
+{
+ "mean_at_079": 0.10432034,
+ "mean_at_149": 0.12405063,
+ "rel": {
+  "0.08": {
+   "A1": -16.545181888786022,
+   "A1_lo": -29.43163337082682,
+   "A1_hi": -2.169366012419055,
+   "A2_lo": -29.713888969303593,
+   "A2_hi": 0.9167914905185317
+  },
+  "0.15_statutory": {
+   "A1": -5.975447283097232,
+   "A1_lo": -14.895764737349582,
+   "A1_hi": 3.4375238561867842,
+   "A2_lo": -15.583354957568536,
+   "A2_hi": 5.497473088206002
+  },
+  "0.15_strict": {
+   "A1": -9.05953480445847,
+   "A1_lo": -18.352030940915014,
+   "A1_hi": -0.5403358290078818,
+   "A2_lo": -20.156012105702327,
+   "A2_hi": 0.7481783849062275
+  }
+ },
+ "sanction_scale": {
+  "0.08": 77.27272727272727,
+  "0.15": 75.0
+ },
+ "reanalysed_elasticity": {
+  "0.08": -0.2141141185607603,
+  "0.15_statutory": -0.07967263044129642,
+  "0.15_strict": -0.12079379739277961
+ },
+ "jail_day_ub": {
+  "0.08": -4.30864111687136,
+  "0.15_statutory": -4.268176630783738,
+  "0.15_strict": -6.471096288898908
+ },
+ "jansson_per_day": -2.6666666666666665,
+ "utah_share_before": 0.04710344827586207,
+ "utah_share_after": 0.10058487724582356,
+ "reg_n": 7,
+ "reg_coef": {
+  "Intercept": 3.6583333333333226,
+  "sev_norecord": -38.15833333333336,
+  "record_change": 41.816666666666684,
+  "incap_in_window": -9.49999999999995
+ },
+ "oos": [
+  {
+   "margin": "Hansen_0.08",
+   "coding": "n/a",
+   "predicted_sign": "deter(-)",
+   "predicted_interval": "none (n<8: descriptive regression, sign model carries inference)",
+   "rel_A1_pct": -16.55,
+   "A1_CI_rel": "[-29.43,-2.17]",
+   "A2_CI_rel": "[-29.71,+0.92]",
+   "A1_excludes0": true,
+   "A2_excludes0": false,
+   "classification": "consistent",
+   "rationale": "severity_norecord majority=deter AND DUI-specific record (Sloan)=deter -> predict DETER"
+  },
+  {
+   "margin": "Hansen_0.15",
+   "coding": "statutory >=0.150",
+   "predicted_sign": "deter(-)",
+   "predicted_interval": "none (n<8: descriptive regression, sign model carries inference)",
+   "rel_A1_pct": -5.98,
+   "A1_CI_rel": "[-14.90,+3.44]",
+   "A2_CI_rel": "[-15.58,+5.50]",
+   "A1_excludes0": false,
+   "A2_excludes0": false,
+   "classification": "consistent",
+   "rationale": "pure severity_norecord, DUI-specific; severity class majority=deter -> predict DETER"
+  },
+  {
+   "margin": "Hansen_0.15",
+   "coding": "strict >0.150",
+   "predicted_sign": "deter(-)",
+   "predicted_interval": "none (n<8: descriptive regression, sign model carries inference)",
+   "rel_A1_pct": -9.06,
+   "A1_CI_rel": "[-18.35,-0.54]",
+   "A2_CI_rel": "[-20.16,+0.75]",
+   "A1_excludes0": true,
+   "A2_excludes0": false,
+   "classification": "consistent",
+   "rationale": "pure severity_norecord, DUI-specific; severity class majority=deter -> predict DETER"
+  }
+ ],
+ "sign_model": [
+  {
+   "margin_class": "mixed",
+   "n": 1,
+   "n_deter": 0,
+   "n_null": 0,
+   "n_criminogenic": 1,
+   "majority": "criminogenic",
+   "studies": "humphries2025"
+  },
+  {
+   "margin_class": "monetary_only",
+   "n": 1,
+   "n_deter": 0,
+   "n_null": 1,
+   "n_criminogenic": 0,
+   "majority": "ambiguous/null",
+   "studies": "finlay2024"
+  },
+  {
+   "margin_class": "record_change",
+   "n": 4,
+   "n_deter": 2,
+   "n_null": 0,
+   "n_criminogenic": 2,
+   "majority": "ambiguous/null",
+   "studies": "sloan2016_prosecution; sloan2016_conviction; agan2023; mueller_smith_schnepel2021"
+  },
+  {
+   "margin_class": "severity_norecord",
+   "n": 12,
+   "n_deter": 7,
+   "n_null": 3,
+   "n_criminogenic": 2,
+   "majority": "deter",
+   "studies": "defigueiredo2015_008_deter; defigueiredo2015_015; rahman2022; kilmer_midgette2020; gehrsitz2017; jansson2025; suonpaa2021; dobbie2018; leslie_pope2017; rose_shemtov2021; bhuller2020; huttunen_ladder"
+  }
+ ]
+}

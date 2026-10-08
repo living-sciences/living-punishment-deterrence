@@ -1,0 +1,52 @@
+{
+  "2021": {
+    "pages": 30,
+    "brac_agree": 1.0,
+    "gender_agree": 1.0,
+    "flag_agree": 1.0,
+    "smin": 0.0,
+    "smax": 4.429
+  },
+  "2022": {
+    "pages": 30,
+    "brac_agree": 1.0,
+    "gender_agree": 1.0,
+    "flag_agree": 1.0,
+    "smin": 0.0,
+    "smax": 3.554
+  },
+  "2023": {
+    "pages": 30,
+    "brac_agree": 1.0,
+    "gender_agree": 1.0,
+    "flag_agree": 1.0,
+    "smin": 0.0,
+    "smax": 4.488
+  },
+  "2024": {
+    "pages": 30,
+    "brac_agree": 1.0,
+    "gender_agree": 1.0,
+    "flag_agree": 1.0,
+    "smin": 0.0,
+    "smax": 4.25
+  },
+  "2025": {
+    "pages": 30,
+    "brac_agree": 1.0,
+    "gender_agree": 1.0,
+    "flag_agree": 1.0,
+    "smin": 0.0,
+    "smax": 3.417
+  },
+  "2026": {
+    "pages": 30,
+    "brac_agree": 1.0,
+    "gender_agree": 1.0,
+    "flag_agree": 1.0,
+    "smin": 0.0,
+    "smax": 4.562
+  },
+  "schema_width_parquet": 10,
+  "brac_agreement_ok_all_years(>=0.995)": true
+}

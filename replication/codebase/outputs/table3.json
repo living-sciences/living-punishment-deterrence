@@ -1,0 +1,17 @@
+{
+  "panelA": {
+    "dui_coef": -0.0221,
+    "se": 0.0041,
+    "pval": 4.6577e-07,
+    "n": 93899
+  },
+  "panelB": {
+    "dui_coef": -0.0193,
+    "se": 0.0048,
+    "pval": 0.0002,
+    "n": 50016
+  },
+  "baseline_mean_recid": 0.1171,
+  "pct_reduction_all": -17.6792,
+  "note": "Cols (2) 'no prior tests' and (3) 'at least one prior test' of Table 3 CANNOT be reproduced: the Mixtape subset lacks the prior-test count variable. Only the 'all drivers' axis is run. County + prior controls also absent; omitted per Appendix Table 1."
+}

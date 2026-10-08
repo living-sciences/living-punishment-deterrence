@@ -1,0 +1,22 @@
+threshold,quantity,endpoint,recid_rel_pct,sanction_pct,value,note
+0.08,deterrence_elasticity,A1_point,-16.55,77.3,-0.2141,paper elasticity -0.22
+0.08,deterrence_elasticity,A1_lo,-29.43,77.3,-0.3809,paper elasticity -0.22
+0.08,deterrence_elasticity,A1_hi,-2.17,77.3,-0.0281,paper elasticity -0.22
+0.08,deterrence_elasticity,A2_lo,-29.71,77.3,-0.3845,paper elasticity -0.22
+0.08,deterrence_elasticity,A2_hi,0.92,77.3,0.0119,paper elasticity -0.22
+0.08,UPPER_BOUND_rel_pct_per_jail_day,A1_point,-16.55,3.84,-4.309,UPPER BOUND: assumes jail is the only active channel (bundle incl conviction/fines/treatment)
+0.15_statutory,deterrence_elasticity,A1_point,-5.98,75.0,-0.0797,paper elasticity -0.12
+0.15_statutory,deterrence_elasticity,A1_lo,-14.9,75.0,-0.1986,paper elasticity -0.12
+0.15_statutory,deterrence_elasticity,A1_hi,3.44,75.0,0.0458,paper elasticity -0.12
+0.15_statutory,deterrence_elasticity,A2_lo,-15.58,75.0,-0.2078,paper elasticity -0.12
+0.15_statutory,deterrence_elasticity,A2_hi,5.5,75.0,0.0733,paper elasticity -0.12
+0.15_statutory,UPPER_BOUND_rel_pct_per_jail_day,A1_point,-5.98,1.4,-4.268,UPPER BOUND: assumes jail is the only active channel (bundle incl conviction/fines/treatment)
+0.15_statutory,ALT_UPPER_BOUND_rel_pct_per_suspension_day,A1_point,-5.98,78.8,-0.0758,ALT upper bound attributing whole effect to +78.8 suspension days
+0.15_strict,deterrence_elasticity,A1_point,-9.06,75.0,-0.1208,paper elasticity -0.12
+0.15_strict,deterrence_elasticity,A1_lo,-18.35,75.0,-0.2447,paper elasticity -0.12
+0.15_strict,deterrence_elasticity,A1_hi,-0.54,75.0,-0.0072,paper elasticity -0.12
+0.15_strict,deterrence_elasticity,A2_lo,-20.16,75.0,-0.2687,paper elasticity -0.12
+0.15_strict,deterrence_elasticity,A2_hi,0.75,75.0,0.01,paper elasticity -0.12
+0.15_strict,UPPER_BOUND_rel_pct_per_jail_day,A1_point,-9.06,1.4,-6.471,UPPER BOUND: assumes jail is the only active channel (bundle incl conviction/fines/treatment)
+0.15_strict,ALT_UPPER_BOUND_rel_pct_per_suspension_day,A1_point,-9.06,78.8,-0.115,ALT upper bound attributing whole effect to +78.8 suspension days
+jansson2025_prison,rel_pct_per_prison_day,per_month_-80%/30,-80.0,30.0,-2.667,"Sweden DUI convicts, 5y all-crime; -80% per prison MONTH /30 days (if linear); contrast w/ Hansen bundle"

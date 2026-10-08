@@ -1,0 +1,38 @@
+{
+  "s08": {
+    "threshold": 0.08,
+    "coding": "statutory",
+    "sign_change": false,
+    "hstar_excl": 0.038,
+    "all_excl": false,
+    "none_excl": false,
+    "min_est": -0.019677,
+    "max_est": -0.012208,
+    "hmin": 0.01,
+    "hmax": 0.068
+  },
+  "s15s": {
+    "threshold": 0.15,
+    "coding": "statutory",
+    "sign_change": false,
+    "hstar_excl": null,
+    "all_excl": false,
+    "none_excl": true,
+    "min_est": -0.008048,
+    "max_est": -0.002995,
+    "hmin": 0.01,
+    "hmax": 0.068
+  },
+  "s15x": {
+    "threshold": 0.15,
+    "coding": "strict",
+    "sign_change": false,
+    "hstar_excl": 0.034,
+    "all_excl": false,
+    "none_excl": false,
+    "min_est": -0.012851,
+    "max_est": -0.009507,
+    "hmin": 0.01,
+    "hmax": 0.068
+  }
+}

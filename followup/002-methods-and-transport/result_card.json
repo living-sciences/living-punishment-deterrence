@@ -1,0 +1,66 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "The paper's recidivism headline has not been re-estimated on post-2007 or non-Washington data (no public data allows it); on the same Washington file under 2026 RD inference the 0.08 effect is bandwidth-dependent — RBC 95% CI [-0.031, -0.002] excludes zero, the honest CI [-0.031, 0.001] includes it — with the point estimate -0.017 stable vs the paper method's -0.0221.",
+  "status": "completed",
+  "metrics": [
+    {"label": "0.08 threshold (A1 RBC + A2 honest, 2026 inference)",
+     "value": "RBC -0.0173, CI [-0.031,-0.002] (excl. 0); honest -0.0150, CI [-0.031,0.001] (incl. 0)",
+     "baseline": "A0 same-file -0.0221; paper -0.021",
+     "baseline_label": "paper method on same file (table3.json) / Hansen 2015",
+     "note": "Bandwidth-dependent; point estimate stable (-22% vs A0). Honest CI 2.0x wider than paper's clustered SE."},
+    {"label": "0.15 threshold, both codings (Branch N)",
+     "value": "statutory >=: RBC CI [-0.019,0.004] incl. 0, honest incl. 0; strict >: RBC CI [-0.023,-0.001] excl. 0, honest incl. 0",
+     "baseline": "A0 same-file -0.0073 / -0.0090; paper -0.010",
+     "baseline_label": "paper method on same file (table4.json) / Hansen 2015",
+     "note": "Coding unresolved; do-files not obtained. Both codings bandwidth-dependent, estimate stable; significance flips with the 0.150-mass-point coding."},
+    {"label": "WA no-sorting test (2026 rddensity)",
+     "value": "p = 0.144 (0.08), 0.158 (0.15)",
+     "baseline": "McCrary p = 0.59 / 0.38",
+     "baseline_label": "paper / density_tests.json",
+     "note": "Modern test agrees with the paper's no-sorting conclusion; the replication's McCrary DCdensity over-rejects on this discrete subset."},
+    {"label": "FL vs WA (2026 tests) at 0.08",
+     "value": "FL rddensity p = 0.61, MDD = 0.196",
+     "baseline": "WA p = 0.14, MDD = 0.100",
+     "baseline_label": "same rddensity test, this study",
+     "note": "No sorting; adequately powered (FL MDD not > 2x WA). Neither outcome bears on the validity of Hansen's Washington estimates."},
+    {"label": "FL vs WA (2026 tests) at 0.15",
+     "value": "FL rddensity p = 0.42, MDD = 0.123",
+     "baseline": "WA p = 0.16, MDD = 0.083",
+     "baseline_label": "same rddensity test, this study",
+     "note": "No sorting; adequately powered. Last-digit heaping on round values flagged; no-sorting robust to donut. Neither outcome bears on the validity of Hansen's Washington estimates."}
+  ],
+  "tables": [
+    {"title": "Panel A headline — WA recidivism RD under 2026 inference",
+     "columns": ["Threshold/coding", "A0 (paper method)", "A1 RBC [CI]", "A2 honest [CI]", "Verdict"],
+     "rows": [
+       ["0.08 (>=)", "-0.0221 (0.0041)", "-0.0173 [-0.031,-0.002]*", "-0.0150 [-0.031,0.001]", "bw-dependent, stable"],
+       ["0.15 (>=)", "-0.0073 (0.0035)", "-0.0074 [-0.019,0.004]", "-0.0063 [-0.019,0.007]", "bw-dependent, stable"],
+       ["0.15 (>)", "-0.0090 (0.0034)", "-0.0112 [-0.023,-0.001]*", "-0.0120 [-0.025,0.001]", "bw-dependent, stable"]
+     ],
+     "highlight_row": 2},
+    {"title": "FL vs WA (2026 tests) transport check",
+     "columns": ["Threshold", "FL no-sort p", "WA p", "FL MDD", "WA MDD", "FL gender balance p"],
+     "rows": [
+       ["0.08", "0.61", "0.14", "0.196", "0.100", "0.56"],
+       ["0.15", "0.42", "0.16", "0.123", "0.083", "0.40"]
+     ]}
+  ],
+  "figures": [
+    {"file": "results/fig_bandwidth_curve.png",
+     "caption": "A3 bandwidth curve: WA 1999-2007 recidivism RD estimate and RBC 95% CI vs bandwidth (triangular kernel), paper points overlaid. The 0.15 statutory CI includes zero at every h; the strict coding excludes it for h >= 0.034.",
+     "alt": "Three panels of RD estimate vs bandwidth with RBC confidence bands and overlaid paper points"},
+    {"file": "results/fig_fl_vs_wa_density.png",
+     "caption": "B4 FL vs WA no-sorting test: log-density jump with 95% CI at 0.08 and 0.15; both states' CIs cover zero.",
+     "alt": "Point-and-CI comparison of log-density jump for Florida and Washington at two thresholds"},
+    {"file": "results/fig_florida_hist.png",
+     "caption": "Florida 2021-2026 two-sample DUI breath-test BAC distribution (n=116,934) with the 0.08 and 0.15 thresholds marked.",
+     "alt": "Histogram of Florida minimum breath-alcohol readings with vertical lines at 0.08 and 0.15"}
+  ],
+  "notes": [
+    "Launch scope: Study A (methods-and-transport) only; Part II theory-update not executed.",
+    "Branch N: openICPSR do-files not obtained, so the 0.15 coding is reported under both statutory (>=) and strict (>) definitions with equal standing.",
+    "The recidivism effect itself is NOT re-estimated on new data; no public person-linked recidivism data exists beyond Hansen's 1999-2007 Washington extract (pending records requests).",
+    "No Florida person linkage or recidivism outcome (out of scope / ethics-gated); all subject/officer names dropped in memory and never written to disk."
+  ],
+  "report_file": "report.md"
+}

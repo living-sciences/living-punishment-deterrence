@@ -1,0 +1,5 @@
+margin_class,n,n_deter,n_null,n_criminogenic,majority,studies
+mixed,1,0,0,1,criminogenic,humphries2025
+monetary_only,1,0,1,0,ambiguous/null,finlay2024
+record_change,4,2,0,2,ambiguous/null,sloan2016_prosecution; sloan2016_conviction; agan2023; mueller_smith_schnepel2021
+severity_norecord,12,7,3,2,deter,defigueiredo2015_008_deter; defigueiredo2015_015; rahman2022; kilmer_midgette2020; gehrsitz2017; jansson2025; suonpaa2021; dobbie2018; leslie_pope2017; rose_shemtov2021; bhuller2020; huttunen_ladder

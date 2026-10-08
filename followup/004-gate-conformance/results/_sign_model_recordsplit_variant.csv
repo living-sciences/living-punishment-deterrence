@@ -1,0 +1,3 @@
+variant,n,deter,null,crim,studies,note
+record_change_DUI,2,2,0,0,sloan2016_prosecution; sloan2016_conviction,DISCLOSED post-hoc split; not a persisted class
+record_change_general,3,0,0,3,agan2023; mueller_smith_schnepel2021; humphries2025,DISCLOSED post-hoc split; INCLUDES Humphries (persisted 'mixed')

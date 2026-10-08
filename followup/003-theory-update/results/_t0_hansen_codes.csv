@@ -1,0 +1,3 @@
+margin,sev_norecord,record_change,monetary_only,incap_in_window,dui_specific,note
+Hansen_0.08,1.0,0.5,0.0,0,1,short jail+suspension+treatment (sev); conviction changes only partly at 0.08 (rec=0.5); fines bundled; jail +3.84d in 4y window=no incap
+Hansen_0.15,1.0,0.0,0.0,0,1,"suspension +78.8d, jail +1.40d (sev); conviction already fixed above 0.08 (rec=0); no incap in 4y window"

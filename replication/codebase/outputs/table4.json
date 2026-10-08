@@ -1,0 +1,17 @@
+{
+  "panelA": {
+    "agg_coef": -0.0073,
+    "se": 0.0035,
+    "pval": 0.0373,
+    "n": 139033
+  },
+  "panelB": {
+    "agg_coef": -0.007,
+    "se": 0.0046,
+    "pval": 0.1361,
+    "n": 75909
+  },
+  "baseline_left_015": 0.1113,
+  "pct_reduction_all": -6.4266,
+  "note": "Cols (2) 'no prior tests' and (3) 'at least one prior test' of Table 4 CANNOT be reproduced: subset lacks the prior-test variable. Only 'all drivers' is run. County/prior controls absent; omitted."
+}

@@ -1,0 +1,55 @@
+{
+  "mccrary": {
+    "thr_008": {
+      "pval": 7.6804e-120,
+      "theta": 0.3104,
+      "se": 0.0133,
+      "z": 23.2764,
+      "bw": 0.0533
+    },
+    "thr_015": {
+      "pval": 0.0018,
+      "theta": 0.0286,
+      "se": 0.0091,
+      "z": 3.1294,
+      "bw": 0.0715
+    }
+  },
+  "frandsen": {
+    "thr_008": {
+      "pval": 0.1348,
+      "k": 0.01,
+      "f_cminus1": 949,
+      "f_cutoff": 998,
+      "f_cminus2": 975,
+      "predicted_cutoff": 923,
+      "theta_null": 0.4956,
+      "obs_share": 0.5126
+    },
+    "thr_015": {
+      "pval": 1,
+      "k": 0.01,
+      "f_cminus1": 1580,
+      "f_cutoff": 1527,
+      "f_cminus2": 1625,
+      "predicted_cutoff": 1535,
+      "theta_null": 0.4915,
+      "obs_share": 0.4915
+    }
+  },
+  "raw_local_ratio": {
+    "thr_008": 1.137,
+    "thr_015": 0.9617
+  },
+  "paper_reference": {
+    "mccrary": {
+      "thr_008": 0.59,
+      "thr_015": 0.38
+    },
+    "frandsen": {
+      "thr_008": 0.795,
+      "thr_015": 0.886
+    }
+  },
+  "note": "McCrary rdd::DCdensity strongly rejects (p~0, theta>0) at both thresholds in this Mixtape SUBSET, diverging from the paper's p=0.59/0.38 (full 512,964-obs sample). The raw local density ratio is only ~1.14 (0.08) and ~0.96 (0.15), i.e. a modest step, so the large theta is a local-linear density-fit artifact: the BAC pmf is heavily discrete (~400 ties) and strongly curved, and n=214k inflates the z-stat. This is exactly the discrete/rounded case the paper cites Frandsen (2013) for. The Frandsen reimplementation does NOT reject at either threshold (consistent with the paper's no-manipulation conclusion), though the exact p-values differ from 0.795/0.886 (different smoothness parameterization)."
+}

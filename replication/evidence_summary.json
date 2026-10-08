@@ -1,0 +1,56 @@
+{
+  "paper": "Hansen (2015) AER - Punishment and Deterrence: Evidence from Drunk Driving",
+  "replication_type": "From-scratch R reimplementation of the paper's local-linear RD (equation 1); original Stata archive account-gated.",
+  "environment": {
+    "language": "R",
+    "r_version": "4.6.1 (2026-06-24)",
+    "python_version": "3.12.8",
+    "gpu_available": true,
+    "gpu_model": "NVIDIA RTX A6000 (x4, 49 GB each)",
+    "gpu_used": false,
+    "gpu_note": "Not applicable - econometric RD on a 214k-row cross-section runs in seconds on CPU.",
+    "r_library": "/workspace/r_lib_hansen",
+    "key_packages": {
+      "haven": "2.5.5", "fixest": "0.14.2", "rdrobust": "4.0.0",
+      "rdd": "0.57 (CRAN archive source)", "sandwich": "3.1.3",
+      "lmtest": "0.9.40", "dplyr": "1.2.1", "ggplot2": "4.0.3", "AER": "1.2.17"
+    }
+  },
+  "data": {
+    "file": "data/hansen_dwi.dta",
+    "n_rows": 214558,
+    "note": "Mixtape SUBSET (214,558 of the paper's 512,964 tests). Missing: county, prior-test count/offense flag, PBT, recidivism-type splits, person ID -> cols 2-3 of Tables 3/4, Prior/PBT of Table 2, and Fig 2 Prior/PBT & Fig 3 Panels B/C are NOT reproducible."
+  },
+  "key_results": {
+    "baseline_mean_recid_below_008": 0.117,
+    "table3_dui_008": {
+      "panelA": {"coef": -0.0221, "se": 0.0041, "n": 93899, "paper": "-0.021 (0.004)"},
+      "panelB": {"coef": -0.0193, "se": 0.0048, "n": 50016, "paper": "-0.019 (0.005)"},
+      "verdict": "reproduced closely"
+    },
+    "table4_agg_015": {
+      "panelA": {"coef": -0.0073, "se": 0.0035, "n": 139033, "paper": "-0.010 (0.003)"},
+      "panelB": {"coef": -0.0070, "se": 0.0046, "n": 75909, "paper": "-0.011 (0.005)"},
+      "verdict": "correct negative sign, smaller magnitude (subset + absent county/prior controls; see S2)"
+    },
+    "table2_balance": "all coefs small vs SE at both thresholds (male/white/age/accident); matches paper -> supports RD assumption",
+    "density_tests": {
+      "mccrary": {"thr_008": {"p": 0.0000, "theta": 0.3104}, "thr_015": {"p": 0.0018, "theta": 0.0286}, "paper": "0.59 / 0.38"},
+      "frandsen": {"thr_008": {"p": 0.1348}, "thr_015": {"p": 1.0000}, "paper": "0.795 / 0.886"},
+      "verdict": "McCrary over-rejects on this discrete/curved subset (S1); Frandsen does not reject (consistent with paper's no-manipulation conclusion)"
+    },
+    "figures": {
+      "figure1": "smooth single-peaked BAC distribution through both thresholds",
+      "figure2": "four covariates continuous across thresholds",
+      "figure3": "clear downward recidivism drop at BOTH 0.08 and 0.15 - headline result reproduced"
+    }
+  },
+  "steps_completed": "9 of 9",
+  "omissions_disclosed": [
+    "Tables 3 & 4 cols (2) no-prior and (3) prior: prior-test variable absent from subset",
+    "Table 2 Prior & PBT columns: variables absent",
+    "Figure 2 Prior & PBT panels: variables absent",
+    "Figure 3 first-time/repeat panels (B/C): prior variable absent",
+    "County + prior-offense controls omitted from Tables 3/4 regressions (absent in subset; paper App. Tables 1/2 report ~equivalent results without controls)"
+  ]
+}

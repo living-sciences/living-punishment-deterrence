@@ -1,0 +1,206 @@
+{
+  "instruction_summary": "Study A (001 methods-and-transport): re-analyse Hansen (2015)'s two RD thresholds on the same 1999-2007 WA public file with 2026 RD inference (rdrobust RBC + RDHonest), and check the design's no-sorting assumption on Florida 2021-2026 STED breath tests; the recidivism headline is NOT re-estimated on new data.",
+  "completed": true,
+  "steps": [
+    {
+      "description": "Verified data hash + staging sha256s (21/21), confirmed Branch N (icpsr do-files absent)",
+      "command": "sha256sum / python verify",
+      "exit_code": 0,
+      "outputs": []
+    },
+    {
+      "description": "Installed rddensity 3.0 + RDHonest 1.0.2 (CRAN); python venv (pandas/pyarrow/matplotlib)",
+      "command": "Rscript install.packages; uv venv",
+      "exit_code": 0,
+      "outputs": []
+    },
+    {
+      "description": "Gate 1 anchor reproduced exactly (-0.0221/0.0041/93899; -0.0073/0.0035/139033); gate 2 means 0.1043/0.1241",
+      "command": "Rscript panelA.R",
+      "exit_code": 0,
+      "outputs": [
+        "results/estimates_headline.csv",
+        "results/headline_scalars.json"
+      ]
+    },
+    {
+      "description": "Panel A: A1 RBC, A2 honest, A3 bandwidth curve, A4 coding/donut sensitivity, A5 eras, A6 density, A7 balance",
+      "command": "Rscript panelA.R panelA2.R",
+      "exit_code": 0,
+      "outputs": [
+        "results/bandwidth_curve.csv",
+        "results/sensitivity_015.csv",
+        "results/sensitivity_008.csv",
+        "results/eras.csv",
+        "results/density_tests_WA.csv",
+        "results/balance_A1.csv",
+        "results/verdict_final.json"
+      ]
+    },
+    {
+      "description": "Panel A figures (bandwidth curve, eras, WA density)",
+      "command": "python figs_panelA.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/fig_bandwidth_curve.png",
+        "results/fig_eras.png",
+        "results/fig_density_WA_080.png",
+        "results/fig_density_WA_150.png"
+      ]
+    },
+    {
+      "description": "Florida ingest: 535 STED PDFs -> 165,162 de-identified tests, privacy-first, per-batch name assertion (0 FL-derived hits), raw PDFs in /tmp only and deleted per batch",
+      "command": "python ingest.py (x4 time-budgeted calls)",
+      "exit_code": 0,
+      "outputs": [
+        "workspace/data/fl_tests_deid.parquet",
+        "workspace/data/fl_manifest.csv",
+        "workspace/data/DATA_DICTIONARY.json"
+      ]
+    },
+    {
+      "description": "Two-extractor structural audit (-layout vs -raw, 30 pages/yr): BrAC/gender/flag agreement 100% all years",
+      "command": "python audit.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/florida_parse_audit.json"
+      ]
+    },
+    {
+      "description": "Panel B1: rddensity + discrete tests + log-density jump/MDD power (FL vs WA, pooled + by year)",
+      "command": "Rscript panelB_density.R",
+      "exit_code": 0,
+      "outputs": [
+        "results/density_tests.csv",
+        "results/florida_power.csv"
+      ]
+    },
+    {
+      "description": "Panel B1 heaping (cutoff share, last-digit chi-square, donut re-run) + B2 gender balance",
+      "command": "Rscript panelB_heaping.R",
+      "exit_code": 0,
+      "outputs": [
+        "results/florida_heaping_shares.csv",
+        "results/florida_lastdigit.csv",
+        "results/florida_lastdigit_byinstrument.csv",
+        "results/florida_density_donut.csv",
+        "results/florida_gender_balance.csv"
+      ]
+    },
+    {
+      "description": "Panel B3/B4 figures + comparison table + per-year counts",
+      "command": "python figs_panelB.py",
+      "exit_code": 0,
+      "outputs": [
+        "results/fig_florida_hist.png",
+        "results/fig_florida_refusal.png",
+        "results/fig_fl_vs_wa_density.png",
+        "results/fl_vs_wa_comparison.csv",
+        "results/florida_counts.csv"
+      ]
+    },
+    {
+      "description": "Gate 5: outputs name-free, parquet schema clean (no name/serial/agency/day/time), /tmp/sted + seed deleted",
+      "command": "grep/python/rm",
+      "exit_code": 0,
+      "outputs": []
+    }
+  ],
+  "key_results": {
+    "gate1_anchor": "reproduced exactly (-0.0221/0.0041/N=93899; -0.0073/0.0035/N=139033)",
+    "A1_0.08_RBC": "-0.0173 (SE 0.0059), RBC 95% CI [-0.0307,-0.0023] excludes 0, h=0.0278",
+    "A2_0.08_honest": "-0.0150, honest 95% CI [-0.0310,0.0010] includes 0, M=120.1",
+    "A1_0.15_statutory_RBC": "-0.0074, RBC CI [-0.0185,0.0043] includes 0",
+    "A1_0.15_strict_RBC": "-0.0112, RBC CI [-0.0228,-0.0007] excludes 0",
+    "verdict_all_three": "bandwidth-dependent under 2026 inference; point estimate stable (within +/-25% of A0)",
+    "WA_rddensity_p": "0.144 (0.08), 0.158 (0.15) - no sorting",
+    "FL_tests_total": 165162,
+    "FL_two_sample_DUI": 116934,
+    "FL_rddensity_p": "0.605 (0.08), 0.415 (0.15) - no sorting",
+    "FL_MDD_vs_WA": "0.196 vs 0.100 (0.08); 0.123 vs 0.083 (0.15); FL MDD not > 2x WA -> adequately powered",
+    "FL_gender_balance": "coef +0.013 (p 0.56) at 0.08; +0.006 (p 0.40) at 0.15 - balanced",
+    "FL_heaping": "no excess at exact cutoff bins (ratio 1.03); last-digit 0 ~21% (round-value heaping); no-sorting robust to donut (p 0.65/0.39, 0.32/0.22)",
+    "transport_verdict": "identifying assumption transports to FL 2021-2026; a FL recidivism RD is feasible on identification grounds (pending person-ID gate), caveat round-value heaping at thresholds"
+  },
+  "comparison_to_original": [
+    {
+      "quantity": "0.08 RD, bw 0.05, controls (anchor)",
+      "original": "-0.0221 (0.0041), N=93899",
+      "followup": "-0.0221 (0.0041), N=93899",
+      "source_file": "replication/codebase/outputs/table3.json",
+      "note": "gate 1 reproduced exactly"
+    },
+    {
+      "quantity": "0.08 RD under 2026 inference",
+      "original": "paper -0.021***; A0 -0.0221",
+      "followup": "A1 RBC -0.0173 [CI excl 0]; A2 honest -0.0150 [CI incl 0]",
+      "source_file": "replication/codebase/outputs/table3.json",
+      "note": "significance bandwidth-dependent; estimate stable"
+    },
+    {
+      "quantity": "0.15 RD, bw 0.05, controls (anchor)",
+      "original": "-0.0073 (0.0035), N=139033",
+      "followup": "-0.0073 (0.0035), N=139033",
+      "source_file": "replication/codebase/outputs/table4.json",
+      "note": "reproduced exactly"
+    },
+    {
+      "quantity": "0.15 RD under 2026 inference",
+      "original": "paper -0.010***; A0 -0.0073/-0.0090",
+      "followup": "statutory: RBC & honest incl 0; strict: RBC excl 0, honest incl 0",
+      "source_file": "replication/codebase/outputs/table4.json",
+      "note": "coding-sensitive; estimate stable"
+    },
+    {
+      "quantity": "WA manipulation test",
+      "original": "McCrary 0.59/0.38 (paper); DCdensity ~0 (repl)",
+      "followup": "rddensity 0.144/0.158",
+      "source_file": "replication/codebase/outputs/density_tests.json",
+      "note": "modern test agrees with paper, not repl's McCrary"
+    }
+  ],
+  "artifacts": [
+    "report.md",
+    "results/findings.md",
+    "result_card.json",
+    "followup_summary.json",
+    "results/estimates_headline.csv",
+    "results/headline_scalars.json",
+    "results/verdict_final.json",
+    "results/bandwidth_curve.csv",
+    "results/fig_bandwidth_curve.png",
+    "results/eras.csv",
+    "results/fig_eras.png",
+    "results/sensitivity_015.csv",
+    "results/sensitivity_008.csv",
+    "results/balance_A1.csv",
+    "results/density_tests.csv",
+    "results/density_tests_WA.csv",
+    "results/_density_WA.json",
+    "results/fig_density_WA_080.png",
+    "results/fig_density_WA_150.png",
+    "results/florida_counts.csv",
+    "results/florida_power.csv",
+    "results/florida_heaping_shares.csv",
+    "results/florida_lastdigit.csv",
+    "results/florida_lastdigit_byinstrument.csv",
+    "results/florida_density_donut.csv",
+    "results/florida_gender_balance.csv",
+    "results/florida_parse_audit.json",
+    "results/fl_vs_wa_comparison.csv",
+    "results/fig_florida_hist.png",
+    "results/fig_florida_refusal.png",
+    "results/fig_fl_vs_wa_density.png",
+    "workspace/data/fl_tests_deid.parquet",
+    "workspace/data/fl_manifest.csv",
+    "workspace/data/DATA_DICTIONARY.json"
+  ],
+  "deviations": [
+    "Part II (002 theory-update) not executed, per the binding launch-scope line (Study A only).",
+    "Branch N: openICPSR 112907 do-files not staged -> 0.15 reported under both codings with equal standing (pre-registered).",
+    "Recidivism headline not re-estimated on new data (by design; no public person-linked data exists beyond the 1999-2007 WA extract).",
+    "Two-extractor audit compares layout-independent quantities (BrAC multiset, presence-based gender/flags): pdftotext -raw reflows the columnar STED form and cannot preserve field-value adjacency for header fields; BrAC character fidelity is 100%.",
+    "notes/2026-09-09-followup-studies-handoff.md contract file not present in run dir; followed instruction + result-presentation skill schemas.",
+    "Run directory numbered 002 but the executed task is the methods-and-transport study (per launch scope)."
+  ]
+}

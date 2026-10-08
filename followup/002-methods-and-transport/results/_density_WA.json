@@ -1,0 +1,108 @@
+{
+  "rddensity": {
+    "thr08": {
+      "p_jk": 0.143895,
+      "T_jk": 1.46144,
+      "f_l": 4.705723,
+      "f_r": 4.956725,
+      "h_l": 0.023,
+      "h_r": 0.023,
+      "N_l": 15060,
+      "N_r": 31301
+    },
+    "thr15": {
+      "p_jk": 0.157872,
+      "T_jk": -1.412264,
+      "f_l": 7.229881,
+      "f_r": 6.931965,
+      "h_l": 0.023,
+      "h_r": 0.023,
+      "N_l": 37042,
+      "N_r": 33383
+    }
+  },
+  "discrete": [
+    {
+      "threshold": 0.08,
+      "k": 1,
+      "obs_cutoff": 998,
+      "pred_cutoff": 1012,
+      "p": 0.771852
+    },
+    {
+      "threshold": 0.08,
+      "k": 2,
+      "obs_cutoff": 998,
+      "pred_cutoff": 1040.5,
+      "p": 0.363776
+    },
+    {
+      "threshold": 0.08,
+      "k": 5,
+      "obs_cutoff": 998,
+      "pred_cutoff": 1024.9,
+      "p": 0.563232
+    },
+    {
+      "threshold": 0.08,
+      "k": 10,
+      "obs_cutoff": 998,
+      "pred_cutoff": 1026.1,
+      "p": 0.548418
+    },
+    {
+      "threshold": 0.15,
+      "k": 1,
+      "obs_cutoff": 1527,
+      "pred_cutoff": 1517.5,
+      "p": 0.870424
+    },
+    {
+      "threshold": 0.15,
+      "k": 2,
+      "obs_cutoff": 1527,
+      "pred_cutoff": 1550.5,
+      "p": 0.678467
+    },
+    {
+      "threshold": 0.15,
+      "k": 5,
+      "obs_cutoff": 1527,
+      "pred_cutoff": 1524.5,
+      "p": 0.971117
+    },
+    {
+      "threshold": 0.15,
+      "k": 10,
+      "obs_cutoff": 1527,
+      "pred_cutoff": 1526.9,
+      "p": 1
+    }
+  ],
+  "replication_DCdensity": {
+    "thr_008": {
+      "pval": 7.6804e-120,
+      "theta": 0.3104,
+      "se": 0.0133,
+      "z": 23.2764,
+      "bw": 0.0533
+    },
+    "thr_015": {
+      "pval": 0.0018,
+      "theta": 0.0286,
+      "se": 0.0091,
+      "z": 3.1294,
+      "bw": 0.0715
+    }
+  },
+  "paper": {
+    "mccrary": {
+      "thr_008": 0.59,
+      "thr_015": 0.38
+    },
+    "frandsen": {
+      "thr_008": 0.795,
+      "thr_015": 0.886
+    }
+  }
+}

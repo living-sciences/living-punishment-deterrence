@@ -1,0 +1,47 @@
+{
+  "panelA": {
+    "male": {
+      "coef": 0.0061,
+      "se": 0.0051,
+      "mean_at_threshold": 0.7876
+    },
+    "white": {
+      "coef": 0.0017,
+      "se": 0.0055,
+      "mean_at_threshold": 0.8469
+    },
+    "age": {
+      "coef": -0.147,
+      "se": 0.1658,
+      "mean_at_threshold": 34.9398
+    },
+    "accident": {
+      "coef": -0.0008,
+      "se": 0.0035,
+      "mean_at_threshold": 0.0994
+    }
+  },
+  "panelB": {
+    "male": {
+      "coef": -0.001,
+      "se": 0.004,
+      "mean_at_threshold": 0.7939
+    },
+    "white": {
+      "coef": 0.0047,
+      "se": 0.0033,
+      "mean_at_threshold": 0.8584
+    },
+    "age": {
+      "coef": 0.0405,
+      "se": 0.1246,
+      "mean_at_threshold": 34.1225
+    },
+    "accident": {
+      "coef": 0.0065,
+      "se": 0.0042,
+      "mean_at_threshold": 0.1193
+    }
+  },
+  "note": "Paper's 'Prior' (col 5) and 'PBT' (col 6) columns of Table 2 CANNOT be reproduced: those variables are absent from the Mixtape subset. Only male/white/age/accident are tested. No controls included (matches paper 'Controls No')."
+}

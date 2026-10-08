@@ -1,0 +1,21 @@
+{
+  "note": "APPENDIX, NOT A TEST. In-sample severity-class mean with vs without Hansen's two rows.",
+  "severity_numeric_rows": {
+    "kilmer_midgette2020": -49.0,
+    "gehrsitz2017": -20.0,
+    "rose_shemtov2021": -44.0
+  },
+  "severity_mean_excl_hansen": -37.7,
+  "hansen_rows_paper_rel": [
+    -17.0,
+    -9.0
+  ],
+  "severity_mean_incl_hansen_paper": -27.8,
+  "hansen_rows_001_rel": [
+    -16.5,
+    -9.1
+  ],
+  "severity_mean_incl_hansen_001": -27.7,
+  "direction": "LESS negative (mean moves toward zero) when Hansen is added; the 002/003 model.md sentence claiming 'more negative' was FABRICATED (no code) and directionally wrong",
+  "class_signs_unchanged": true
+}
